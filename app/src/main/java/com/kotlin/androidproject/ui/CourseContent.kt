@@ -44,7 +44,7 @@ fun CourseScreen(
     onCardClick: (Course) -> Unit,
     dataSet:List<Course>,
     modifier: Modifier=Modifier,
-    currentCourse:String
+
 ){
     Column {
 
@@ -59,7 +59,7 @@ fun CourseScreen(
             }
 
         }
-        Text(text = currentCourse)
+//        Text(text = currentCourse)
     }
     }
 
@@ -91,5 +91,5 @@ fun CourseItem(Course: Course, modifier: Modifier=Modifier,
 @Composable
 @Preview
 fun UserPreview(){
-    CourseScreen(onCardClick = {}, dataSet= dummyData,currentCourse = "Dummy")
+    CourseScreen(onCardClick = {}, dataSet= dummyData)
 }

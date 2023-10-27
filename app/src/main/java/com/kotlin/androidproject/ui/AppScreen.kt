@@ -53,15 +53,18 @@ fun AppScreen(){
             ){
             composable(route = CourseNav.Courses.name){
                 CourseScreen(
-                    onCardClick = { viewMod.setCourse(context,it) },
-                    currentCourse = uiState.selectedCourse.name,
+                    onCardClick = { viewMod.setCourse(context,it)
+                                  navController.navigate(CourseNav.DetailedCourse.name)},
                     dataSet = dummyData,
                     modifier = Modifier
                 )
             }
 
             composable(route = CourseNav.DetailedCourse.name){
+                CourseDetails(course = uiState.selectedCourse,
+                        openCourse = {
 
+                        })
             }
         }
 
