@@ -1,5 +1,6 @@
 package com.kotlin.androidproject.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,14 +20,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kotlin.androidproject.R
 import com.kotlin.androidproject.data.dummyData
 
 
-enum class CourseNav() {
-    Courses,
-    DeatiledCourse
+enum class CourseNav(@StringRes val title: Int) {
+    Courses(title = R.string.app_name),
+    DetailedCourse(title = R.string.course_detail);
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,14 +38,12 @@ fun AppScreen(){
     val uiState by viewMod.uiState.collectAsState()
     val context = LocalContext.current
     val navController : NavHostController = rememberNavController()
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currLayout = CourseNav.valueOf(
+        backStackEntry?.destination?.route?: CourseNav.Courses.name
+    )
     Scaffold(
-        topBar = { TopAppBar(
-            title = { Text(text = stringResource(id = R.string.app_name)) },
-            colors = TopAppBarDefaults.mediumTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
+        topBar = { topAppBar(currLayout)
         }
     ) {
             innerPadding->
@@ -52,6 +52,15 @@ fun AppScreen(){
                 modifier = Modifier.padding(innerPadding)
             ){
             composable(route = CourseNav.Courses.name){
+                CourseScreen(
+                    onCardClick = { viewMod.setCourse(context,it) },
+                    currentCourse = uiState.selectedCourse.name,
+                    dataSet = dummyData,
+                    modifier = Modifier
+                )
+            }
+
+            composable(route = CourseNav.DetailedCourse.name){
 
             }
         }
@@ -60,7 +69,17 @@ fun AppScreen(){
     }
 }
 
-
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun topAppBar(currScr:CourseNav){
+    TopAppBar(
+        title = { Text(text = stringResource(currScr.title))},
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+        modifier = Modifier.fillMaxWidth()
+    )
+}
 
 @Preview(showSystemUi = true)
 @Composable
