@@ -43,7 +43,7 @@ fun AppScreen(){
         backStackEntry?.destination?.route?: CourseNav.Courses.name
     )
     Scaffold(
-        topBar = { topAppBar(currLayout)
+        topBar = { topAppBar ( currLayout)
         }
     ) {
             innerPadding->
