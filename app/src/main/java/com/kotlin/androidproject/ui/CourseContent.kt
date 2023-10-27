@@ -26,6 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -67,7 +68,8 @@ fun CourseScreen(
 fun CourseItem(Course: Course, modifier: Modifier=Modifier,
              onCardClick : ()->Unit){
     Card(
-         modifier.clickable(onClick = onCardClick),
+         modifier.clickable(onClick = onCardClick)
+             .clip(MaterialTheme.shapes.medium),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         )
@@ -78,9 +80,9 @@ fun CourseItem(Course: Course, modifier: Modifier=Modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ){
-            Text(Course.username,modifier, textAlign = TextAlign.Center,style = MaterialTheme.typography.titleLarge)
-            Text(Course.information,modifier)
-            Text(Course.age.toString(),modifier)
+            Text(Course.name,modifier, textAlign = TextAlign.Center,style = MaterialTheme.typography.titleLarge)
+            Text("Information : "+Course.information,modifier)
+            Text("Time to complete : "+Course.age.toString()+" hrs",modifier)
 
         }
     }

@@ -17,8 +17,8 @@ class AppViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(dataUiState())
     val uiState:StateFlow<dataUiState> = _uiState.asStateFlow()
     private fun showToast(context: Context, message:String,course: Course){
-        Log.d("cliable",message+course.username)
-        Toast.makeText(context,message+ course.username, Toast.LENGTH_SHORT).show()
+        Log.d("cliable",message+course.name)
+        Toast.makeText(context,message+ course.name, Toast.LENGTH_SHORT).show()
     }
     fun setCourse(context: Context,course: Course){
         _uiState.value = dataUiState(course)
