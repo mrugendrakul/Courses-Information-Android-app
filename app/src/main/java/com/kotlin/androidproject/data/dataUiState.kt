@@ -1,5 +1,5 @@
 package com.kotlin.androidproject.data
 
-data class dataUiState (
-    val username:String
+data class dataUiState(
+    var selectedCourse:Course = Course("","",0)
 )

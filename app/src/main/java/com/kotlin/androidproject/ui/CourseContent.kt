@@ -22,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,47 +31,40 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kotlin.androidproject.R
 import com.kotlin.androidproject.data.dummyData
 import com.kotlin.androidproject.data.Course
 
-private fun showToast(context:Context ,message:String){
-    Log.d("cliable",message)
-    Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
-}
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserScreen(
-
+fun CourseScreen(
+    onCardClick: (Course) -> Unit,
+    dataSet:List<Course>,
+    modifier: Modifier=Modifier,
+    currentCourse:String
 ){
-    val context = LocalContext.current
-    Scaffold(
-        topBar = { TopAppBar(
-            title = { Text(text = stringResource(id = R.string.app_name)) },
-            colors = TopAppBarDefaults.mediumTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )}
-    ) {
-        innerpadding->
+    Column {
+
+
         LazyColumn(
-            modifier = Modifier.padding(innerpadding)
-        ){items(dummyData){
-                UserItem(Course = it,modifier = Modifier
+            modifier = modifier
+        ) {
+            items(dataSet) {
+                CourseItem(Course = it, modifier = Modifier
                     .padding(8.dp)
-                    .fillMaxWidth(),onCardClick = { showToast(context,message = "Clicked course is ${it.username}") })
+                    .fillMaxWidth(), onCardClick = { onCardClick(it) })
             }
 
         }
-
+        Text(text = currentCourse)
     }
-}
+    }
+
 
 @Composable
-fun UserItem(Course: Course, modifier: Modifier=Modifier,
+fun CourseItem(Course: Course, modifier: Modifier=Modifier,
              onCardClick : ()->Unit){
     Card(
          modifier.clickable(onClick = onCardClick),
@@ -94,5 +89,5 @@ fun UserItem(Course: Course, modifier: Modifier=Modifier,
 @Composable
 @Preview
 fun UserPreview(){
-    UserScreen()
+    CourseScreen(onCardClick = {}, dataSet= dummyData,currentCourse = "Dummy")
 }
