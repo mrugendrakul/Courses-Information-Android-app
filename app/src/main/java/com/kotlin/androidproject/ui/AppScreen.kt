@@ -63,7 +63,7 @@ fun AppScreen(){
             composable(route = CourseNav.DetailedCourse.name){
                 CourseDetails(course = uiState.selectedCourse,
                         openCourse = {
-
+                                viewMod.openCourse(it)
                         })
             }
         }

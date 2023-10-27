@@ -25,5 +25,7 @@ class AppViewModel: ViewModel() {
 //        showToast(context,"Course selected",course)
     }
 
-
+    fun openCourse(url:String){
+        Log.d("ViewModel","shareCourse")
+    }
 }
