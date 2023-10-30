@@ -5,5 +5,5 @@ data class Course(
     val information:String,
     val age:Int,
     val detailedData:String = "",
-    val URL:String = "www.google.com"
+    val URL:String = ""
 )

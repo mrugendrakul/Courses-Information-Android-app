@@ -45,6 +45,7 @@ fun CourseDetails(course: Course,openCourse:(String)->Unit){
             style = MaterialTheme.typography.bodyLarge
             )
         Spacer(Modifier.weight(1f))
+        Text(text = course.URL)
         Button(onClick = { openCourse(course.URL) },
             modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text(stringResource(R.string.share_this_course))

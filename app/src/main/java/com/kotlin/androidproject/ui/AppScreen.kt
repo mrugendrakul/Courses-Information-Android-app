@@ -1,9 +1,16 @@
 package com.kotlin.androidproject.ui
 
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,7 +50,9 @@ fun AppScreen(){
         backStackEntry?.destination?.route?: CourseNav.Courses.name
     )
     Scaffold(
-        topBar = { topAppBar ( currLayout)
+        topBar = { topAppBar ( currLayout,
+            canNavigateBack=navController.previousBackStackEntry!=null,
+            navigateBack={navController.navigateUp()})
         }
     ) {
             innerPadding->
@@ -63,7 +72,7 @@ fun AppScreen(){
             composable(route = CourseNav.DetailedCourse.name){
                 CourseDetails(course = uiState.selectedCourse,
                         openCourse = {
-                                viewMod.openCourse(it)
+                                viewMod.openCourse(context,it)
                         })
             }
         }
@@ -72,15 +81,43 @@ fun AppScreen(){
     }
 }
 
+fun openCourse(context: Context,
+               url:String){
+    val intent = Intent(Intent.ACTION_SEND).apply{
+        type="text/plain"
+        putExtra(Intent.EXTRA_SUBJECT,url)
+//        putExtra(Intent.EXTRA_TEXT,_uiState.value.selectedCourse.URL)
+    }
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            context.getString(R.string.share_course)
+        )
+    )
+    Log.d("ViewModel","shareCourse")
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun topAppBar(currScr:CourseNav){
+fun topAppBar(currScr:CourseNav,
+              canNavigateBack:Boolean,
+              navigateBack:()->Unit){
     TopAppBar(
         title = { Text(text = stringResource(currScr.title))},
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer
         ),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        navigationIcon = {
+            if(canNavigateBack){
+                IconButton(onClick = { navigateBack() }) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back_button)
+                    )
+                }
+            }
+        }
     )
 }
 

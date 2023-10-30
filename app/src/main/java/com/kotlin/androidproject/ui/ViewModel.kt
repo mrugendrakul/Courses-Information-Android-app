@@ -1,10 +1,12 @@
 package com.kotlin.androidproject.ui
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
+import com.kotlin.androidproject.R
 import com.kotlin.androidproject.data.Course
 import com.kotlin.androidproject.data.dataUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +27,19 @@ class AppViewModel: ViewModel() {
 //        showToast(context,"Course selected",course)
     }
 
-    fun openCourse(url:String){
+    fun openCourse(context: Context,
+                   url:String){
+        val intent = Intent(Intent.ACTION_SEND).apply{
+            type="text/plain"
+            putExtra(Intent.EXTRA_SUBJECT,url)
+            putExtra(Intent.EXTRA_TEXT,_uiState.value.selectedCourse.URL)
+        }
+       context.startActivity(
+           Intent.createChooser(
+               intent,
+               context.getString(R.string.share_course)
+           )
+       )
         Log.d("ViewModel","shareCourse")
     }
 }
