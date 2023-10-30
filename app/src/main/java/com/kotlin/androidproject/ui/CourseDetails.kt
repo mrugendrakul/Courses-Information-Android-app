@@ -1,5 +1,6 @@
 package com.kotlin.androidproject.ui
 
+import android.util.Log
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,6 +38,7 @@ fun CourseDetails(course: Course,openCourse:(String)->Unit){
              style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center)
+        Log.d("frontend","Course entered")
         Divider(thickness = 2.dp)
         Row(modifier = Modifier){
             Column (Modifier.weight(1f)){
@@ -53,8 +55,8 @@ fun CourseDetails(course: Course,openCourse:(String)->Unit){
             style = MaterialTheme.typography.bodyLarge
         )
 
-//        Spacer(Modifier.weight(1f))
-        Text(text = course.URL)
+        Spacer(Modifier.weight(1f))
+//        Text(text = course.URL)
         Button(
             onClick = { openCourse(course.URL) },
             modifier = Modifier.align(Alignment.CenterHorizontally)

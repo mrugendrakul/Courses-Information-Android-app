@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,6 +21,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -30,13 +34,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kotlin.androidproject.R
+import com.kotlin.androidproject.data.Course
 import com.kotlin.androidproject.data.dummyData
+
 
 
 enum class CourseNav(@StringRes val title: Int) {
     Courses(title = R.string.app_name),
     DetailedCourse(title = R.string.course_detail);
 }
+
+
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,6 +56,10 @@ fun AppScreen(){
     val context = LocalContext.current
     val navController : NavHostController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
+    val dataset = uiState.dataSet
+
+
+
     val currLayout = CourseNav.valueOf(
         backStackEntry?.destination?.route?: CourseNav.Courses.name
     )
@@ -64,8 +78,9 @@ fun AppScreen(){
                 CourseScreen(
                     onCardClick = { viewMod.setCourse(context,it)
                                   navController.navigate(CourseNav.DetailedCourse.name)},
-                    dataSet = dummyData,
-                    modifier = Modifier
+                    dataSet = dataset,
+                    modifier = Modifier,
+                    refresh = { viewMod.getData() }
                 )
             }
 
@@ -103,23 +118,26 @@ fun openCourse(context: Context,
 fun topAppBar(currScr:CourseNav,
               canNavigateBack:Boolean,
               navigateBack:()->Unit){
-    TopAppBar(
-        title = { Text(text = stringResource(currScr.title))},
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
-        ),
-        modifier = Modifier.fillMaxWidth(),
-        navigationIcon = {
-            if(canNavigateBack){
-                IconButton(onClick = { navigateBack() }) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back_button)
-                    )
+
+        TopAppBar(
+            title = { Text(text = stringResource(currScr.title)) },
+            colors = TopAppBarDefaults.mediumTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            navigationIcon = {
+                if (canNavigateBack) {
+                    IconButton(onClick = { navigateBack() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back_button)
+                        )
+                    }
                 }
             }
-        }
-    )
+        )
+
+
 }
 
 @Preview(showSystemUi = true)
