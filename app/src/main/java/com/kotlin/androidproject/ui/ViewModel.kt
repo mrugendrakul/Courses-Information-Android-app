@@ -55,6 +55,7 @@ class AppViewModel: ViewModel() {
     }
 
     interface UserService {
+        //endPoint to get the data
         @GET("users")
         fun getUsers(): Call<List<Course>>
     }
@@ -65,6 +66,7 @@ class AppViewModel: ViewModel() {
     class UserRepository {
 
         private val retrofit = Retrofit.Builder()
+            //Url for the backend data
             .baseUrl("https://jsonplaceholder.typicode.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -65,6 +66,7 @@ fun CourseScreen(
         }
 //        Text(text = currentCourse)
         Button(onClick = refresh,
+            modifier.fillMaxWidth().width(100.dp)
             ) {
             Text(text = "Refresh")
         }
@@ -111,5 +113,5 @@ fun CourseItem(Course: Course, modifier: Modifier=Modifier,
 @Composable
 @Preview
 fun UserPreview(){
-    CourseScreen(onCardClick = {}, dataSet= dummyData, refresh = {})
+    CourseScreen(onCardClick = {}, dataSet= listOf(), refresh = {})
 }
