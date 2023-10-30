@@ -1,11 +1,14 @@
 package com.kotlin.androidproject.ui
 
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +28,10 @@ import com.kotlin.androidproject.data.Course
 fun CourseDetails(course: Course,openCourse:(String)->Unit){
     Column(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+
     ) {
         Text(text = course.name,
              style = MaterialTheme.typography.titleLarge,
@@ -41,15 +47,25 @@ fun CourseDetails(course: Course,openCourse:(String)->Unit){
             Spacer(Modifier.weight(1f))
         }
         Divider(thickness = 2.dp, modifier = Modifier.alpha(0f))
-        Text(text = course.detailedData,
+
+        Text(
+            text = course.detailedData,
             style = MaterialTheme.typography.bodyLarge
-            )
-        Spacer(Modifier.weight(1f))
+        )
+
+//        Spacer(Modifier.weight(1f))
         Text(text = course.URL)
-        Button(onClick = { openCourse(course.URL) },
-            modifier = Modifier.align(Alignment.CenterHorizontally)) {
+        Button(
+            onClick = { openCourse(course.URL) },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
             Text(stringResource(R.string.share_this_course))
         }
+//        Button(onClick = { openBrower(course.URL) },
+//            modifier = Modifier.align(Alignment.CenterHorizontally)) {
+//            Text(stringResource(R.string.open_the_course))
+//        }
+
     }
 }
 
@@ -58,5 +74,6 @@ fun CourseDetails(course: Course,openCourse:(String)->Unit){
 fun previewDetails(){
     CourseDetails(Course("GeeksForGeeks","SelfPaces",33,
         "Data Structures and Algorithms are building blocks of programming. Data structures enable us to organize and store data, whereas algorithms enable us to process that data in a meaningful sense. So opt for the best quality DSA Course to build & enhance your Data Structures and Algorithms foundational skills and at the same time master them to the next level."),
-        openCourse = {})
+        openCourse = {},
+       )
 }

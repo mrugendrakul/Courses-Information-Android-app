@@ -74,6 +74,7 @@ fun AppScreen(){
                         openCourse = {
                                 viewMod.openCourse(context,it)
                         })
+//                        openBrower = { viewMod.openLink(it, context) })
             }
         }
 

@@ -4,8 +4,10 @@ package com.kotlin.androidproject.ui
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -68,8 +70,9 @@ fun CourseScreen(
 fun CourseItem(Course: Course, modifier: Modifier=Modifier,
              onCardClick : ()->Unit){
     Card(
-         modifier.clickable(onClick = onCardClick)
-             .clip(MaterialTheme.shapes.medium),
+        modifier
+            .clickable(onClick = onCardClick)
+            .clip(MaterialTheme.shapes.medium),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         )
@@ -80,7 +83,18 @@ fun CourseItem(Course: Course, modifier: Modifier=Modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ){
-            Text(Course.name,modifier, textAlign = TextAlign.Center,style = MaterialTheme.typography.titleLarge)
+            Box(modifier = modifier
+                .clip(shape = MaterialTheme.shapes.medium)
+                .background(color = MaterialTheme.colorScheme.secondary)
+            ){
+                Text(
+                    Course.name,
+                    modifier,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
             Text("Information : "+Course.information,modifier)
             Text("Time to complete : "+Course.age.toString()+" hrs",modifier)
 

@@ -2,9 +2,13 @@ package com.kotlin.androidproject.ui
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import com.kotlin.androidproject.R
 import com.kotlin.androidproject.data.Course
@@ -42,4 +46,7 @@ class AppViewModel: ViewModel() {
        )
         Log.d("ViewModel","shareCourse")
     }
+
+
+
 }
