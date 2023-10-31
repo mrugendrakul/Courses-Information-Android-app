@@ -66,7 +66,7 @@ fun CourseScreen(
         }
 //        Text(text = currentCourse)
         Button(onClick = refresh,
-            modifier.fillMaxWidth().width(100.dp)
+            modifier.fillMaxWidth().width(25.dp).padding(16.dp)
             ) {
             Text(text = "Refresh")
         }

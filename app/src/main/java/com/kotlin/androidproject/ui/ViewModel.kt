@@ -2,13 +2,10 @@ package com.kotlin.androidproject.ui
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat.startActivity
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCompositionContext
 import androidx.lifecycle.ViewModel
 import com.kotlin.androidproject.R
 import com.kotlin.androidproject.data.Course
@@ -17,7 +14,6 @@ import com.kotlin.androidproject.data.dataUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,13 +25,14 @@ class AppViewModel: ViewModel() {
 
     private val _uiState = MutableStateFlow(dataUiState())
     val uiState:StateFlow<dataUiState> = _uiState.asStateFlow()
-    private fun showToast(context: Context, message:String,course: Course){
-        Log.d("cliable",message+course.name)
-        Toast.makeText(context,message+ course.name, Toast.LENGTH_SHORT).show()
-    }
+
     fun setCourse(context: Context,course: Course){
         _uiState.value = dataUiState(course)
 //        showToast(context,"Course selected",course)
+    }
+    fun showToast(context: Context, message:String,course: Course){
+        Log.d("cliable",message+course.name)
+        Toast.makeText(context,message+ course.name, Toast.LENGTH_SHORT).show()
     }
 
     fun openCourse(context: Context,
@@ -86,6 +83,7 @@ class AppViewModel: ViewModel() {
                 }
 
                 override fun onFailure(call: Call<List<Course>>, t: Throwable) {
+                    Log.d("database_view","no internet")
                     callback(null, t) // Failure
                 }
             })
@@ -97,9 +95,12 @@ class AppViewModel: ViewModel() {
         val userRep = UserRepository()
         var persons = listOf<Course>()
         userRep.fetchUsers{
-                users,error ->
+                users,error->
             if(error!=null){
                 error.printStackTrace()
+                Log.d("database_view22","no internet")
+                _uiState.value = dataUiState(isInternet = false)
+//                testInternet()
             }
             else{
                 if (users != null && users.isNotEmpty()) {
@@ -119,7 +120,6 @@ class AppViewModel: ViewModel() {
         }
 
     }
-
 
     init {
         getData()
