@@ -109,7 +109,7 @@ class AppViewModel: ViewModel() {
                     _uiState.value = dataUiState(dataSet = users)
                     for (user in _uiState.value.dataSet) {
 //                    println("Name: ${user.name}, Email: ${user.URL}")
-                    Log.d("dataset_viewm","Name: ${user.name}, Email: ${user.URL}")
+                    Log.d("dataset_viewm","Name: ${user.name}, Email: ${user.email}")
 //                    persons.add(Course(user.name,URL=user.URL))
                     }
                 } else {

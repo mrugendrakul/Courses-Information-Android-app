@@ -39,10 +39,6 @@ enum class CourseNav(@StringRes val title: Int) {
     DetailedCourse(title = R.string.course_detail);
 }
 
-
-
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScreen(){

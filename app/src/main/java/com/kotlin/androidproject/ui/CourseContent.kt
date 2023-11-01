@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kotlin.androidproject.R
-import com.kotlin.androidproject.data.dummyData
 import com.kotlin.androidproject.data.Course
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -103,8 +102,8 @@ fun CourseItem(Course: Course, modifier: Modifier=Modifier,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
-            Text("Information : "+Course.information,modifier)
-            Text("Time to complete : "+Course.age.toString()+" hrs",modifier)
+            Text("Information : "+Course.username,modifier)
+            Text("Id : "+Course.id,modifier)
 
         }
     }

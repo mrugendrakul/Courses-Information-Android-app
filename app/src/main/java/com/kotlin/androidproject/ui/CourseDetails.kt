@@ -31,7 +31,7 @@ fun CourseDetails(course: Course,openCourse:(String)->Unit){
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+//            .verticalScroll(rememberScrollState())
 
     ) {
         Text(text = course.name,
@@ -42,27 +42,27 @@ fun CourseDetails(course: Course,openCourse:(String)->Unit){
         Divider(thickness = 2.dp)
         Row(modifier = Modifier){
             Column (Modifier.weight(1f)){
-                Text(text = course.information)
+                Text(text = course.phone)
                 Divider(thickness = 2.dp)
-                Text(text = "${course.age}")
+                Text(text = course.website)
             }
             Spacer(Modifier.weight(1f))
         }
         Divider(thickness = 2.dp, modifier = Modifier.alpha(0f))
 
         Text(
-            text = course.detailedData,
+            text = course.email,
             style = MaterialTheme.typography.bodyLarge
         )
 
         Spacer(Modifier.weight(1f))
 //        Text(text = course.URL)
-        Button(
-            onClick = { openCourse(course.URL) },
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Text(stringResource(R.string.share_this_course))
-        }
+//        Button(
+//            onClick = { openCourse(course.email) },
+//            modifier = Modifier.align(Alignment.CenterHorizontally)
+//        ) {
+//            Text(stringResource(R.string.share_this_course))
+//        }
 //        Button(onClick = { openBrower(course.URL) },
 //            modifier = Modifier.align(Alignment.CenterHorizontally)) {
 //            Text(stringResource(R.string.open_the_course))
@@ -74,8 +74,8 @@ fun CourseDetails(course: Course,openCourse:(String)->Unit){
 @Composable
 @Preview
 fun previewDetails(){
-    CourseDetails(Course("GeeksForGeeks","SelfPaces",33,
-        "Data Structures and Algorithms are building blocks of programming. Data structures enable us to organize and store data, whereas algorithms enable us to process that data in a meaningful sense. So opt for the best quality DSA Course to build & enhance your Data Structures and Algorithms foundational skills and at the same time master them to the next level."),
-        openCourse = {},
-       )
+//    CourseDetails(Course("GeeksForGeeks","SelfPaces",33,
+//        "Data Structures and Algorithms are building blocks of programming. Data structures enable us to organize and store data, whereas algorithms enable us to process that data in a meaningful sense. So opt for the best quality DSA Course to build & enhance your Data Structures and Algorithms foundational skills and at the same time master them to the next level."),
+//        openCourse = {},
+//       )
 }
